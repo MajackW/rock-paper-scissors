@@ -3,28 +3,25 @@ let computerScore = 0;
 
 //function for playing the game
 function playRound(humanChoice, computerChoice) {
-    if (humanChoice === "rock" && computerChoice === "scissors") {
-        console.log(`you won this round ${humanChoice} beats ${computerChoice}`);
-        humanScore++;
-    } else if(humanChoice === "rock" && computerChoice === "paper") {
-        console.log(`you loose ${computerChoice} beats ${humanChoice}`);
-        computerScore++;
-    } else if (humanChoice === computerChoice) {
+    if (humanChoice === computerChoice) {
         console.log(`its a tie you both chose ${humanChoice}`);
-    } else if (humanChoice === "paper" && computerChoice === "rock") {
+        return;
+    }
+
+    const humanWins =
+        (humanChoice === "rock" && computerChoice === "scissors") ||
+        (humanChoice === "paper" && computerChoice === "rock") ||
+        (humanChoice === "scissors" && computerChoice === "paper");
+
+    if (humanWins) {
         console.log(`you won this round ${humanChoice} beats ${computerChoice}`);
         humanScore++;
-    }else if (humanChoice === "paper" && computerChoice === "scissors") {
+    } else {
         console.log(`you loose ${computerChoice} beats ${humanChoice}`);
         computerScore++;
-    }else if (humanChoice === "scissors" && computerChoice === "rock") {
-        console.log(`you loose ${computerChoice} beats ${humanChoice}`);
-        computerScore++;
-    }else {
-        console.log(`you win ${humanChoice} beats ${computerChoice}`);
-        humanScore++;
     }
 }
+
 /*this function gets the computers choice
 between rock paper or scissors 
 */
