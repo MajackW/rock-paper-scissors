@@ -4,7 +4,8 @@ let computerScore = 0;
 //function for playing the game
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
-        console.log(`its a tie you both chose ${humanChoice}`);
+        alert(`its a tie you both chose ${humanChoice}
+            \n you have ${humanScore} point(s) against computer's ${computerScore} point(s)`);
         return;
     }
 
@@ -14,11 +15,13 @@ function playRound(humanChoice, computerChoice) {
         (humanChoice === "scissors" && computerChoice === "paper");
 
     if (humanWins) {
-        console.log(`you won this round ${humanChoice} beats ${computerChoice}`);
         humanScore++;
+        alert(`you won this round ${humanChoice} beats ${computerChoice}
+            \n you have ${humanScore} point(s) against computer's ${computerScore} point(s)`);
     } else {
-        console.log(`you loose ${computerChoice} beats ${humanChoice}`);
         computerScore++;
+        alert(`you loose ${computerChoice} beats ${humanChoice}
+            \n you have ${humanScore} point(s) against computer's ${computerScore} point(s)`);
     }
 }
 
@@ -43,23 +46,8 @@ function getComputerChoice() {
     }
 
 }
-
-/*  this function gets human choice between
-rock paper or scissors and converts to lowercase
-*/
-function getHumanChoice(){
-    let humanChoice;
-    humanChoice = prompt("enter your choice: rock, paper or scissors? ");
-    let humanChoiceLower = humanChoice.toLowerCase();
-    return humanChoiceLower;
-}
-function playGame() {
-    for (let i = 0; i < 5; i++) {
-        humanChoice = getHumanChoice();
-        computerChoice = getComputerChoice();
-        playRound(humanChoice,computerChoice);
-    }
-    let winner = (humanScore > computerScore) ? `you won with ${humanScore} points` : `computer won with ${computerScore} points`;
-    console.log(winner);
-}
-playGame();
+const choices = document.querySelectorAll("button");
+choices.forEach((choice) => {
+    choice.addEventListener("click", () => 
+        playRound(choice.id, getComputerChoice()));
+});

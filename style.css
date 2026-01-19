@@ -1,0 +1,16 @@
+#playerSelection{
+    display: flex;
+    flex-direction:row ;
+    gap: 50px;
+    margin: 200px 20px;
+    justify-content: center;
+}
+button{
+    padding: 20px;
+    border-radius: 4px;
+    background-color: blue;
+    color: white;
+}
+h1{
+    text-align: center;
+}
