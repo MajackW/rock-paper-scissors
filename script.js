@@ -1,11 +1,20 @@
 let humanScore = 0;
 let computerScore = 0;
 
+const message = document.querySelector(".message");
+function messageToDisplay(text){
+    message.replaceChildren();
+    const paragraph = document.createElement("p");
+    paragraph.textContent = text;
+    message.appendChild(paragraph);
+}
 //function for playing the game
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
-        alert(`its a tie you both chose ${humanChoice}
-            \n you have ${humanScore} point(s) against computer's ${computerScore} point(s)`);
+        const message = (`its a tie you both chose ${humanChoice}
+            you have ${humanScore} point(s) against computer's 
+            ${computerScore} point(s)`);
+            messageToDisplay(message)
         return;
     }
 
@@ -16,12 +25,16 @@ function playRound(humanChoice, computerChoice) {
 
     if (humanWins) {
         humanScore++;
-        alert(`you won this round ${humanChoice} beats ${computerChoice}
-            \n you have ${humanScore} point(s) against computer's ${computerScore} point(s)`);
+        const message = (`you won this round ${humanChoice} beats ${computerChoice}
+            you have ${humanScore} point(s) against computer's 
+            ${computerScore} point(s)`);
+            messageToDisplay(message);
     } else {
         computerScore++;
-        alert(`you loose ${computerChoice} beats ${humanChoice}
-            \n you have ${humanScore} point(s) against computer's ${computerScore} point(s)`);
+        const message = (`you loose ${computerChoice} beats ${humanChoice}
+            you have ${humanScore} point(s) against computer's 
+            ${computerScore} point(s)`);
+            messageToDisplay(message);
     }
 }
 
@@ -49,5 +62,31 @@ function getComputerChoice() {
 const choices = document.querySelectorAll("button");
 choices.forEach((choice) => {
     choice.addEventListener("click", () => 
-        playRound(choice.id, getComputerChoice()));
+        playGame(choice.id, getComputerChoice()));
 });
+function playGame(humanChoice,computerChoice){
+    playRound(humanChoice,computerChoice);
+    if (humanScore === 5){
+        displaywinner("human");
+    }else if(computerScore === 5){
+        displaywinner("computer");
+    }
+}
+function displaywinner(winner){
+    const winnermessage = document.createElement("h1");
+    const playGround = document.querySelector("playerSelection");
+    if (winner === "human"){
+        winnermessage.textContent = "YOU WIN!!";
+        humanScore = 0;
+        computerScore = 0;
+        playerSelection.replaceChildren();
+        playerSelection.appendChild(winnermessage);
+    } else{
+        winnermessage.textContent = "COMPUTER WINS";
+        computerScore = 0;
+        humanScore = 0;
+         playerGround.replaceChildren();
+        playerGround.appendChild(winnermessage);
+        
+    }
+}
