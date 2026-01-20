@@ -1,9 +1,14 @@
+#choices{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin: 100px 20px 20px 100px;
+    justify-content: center;
+}
 #playerSelection{
     display: flex;
-    flex-direction:row ;
-    gap: 50px;
-    margin: 200px 20px 20px 100px;
-    justify-content: center;
+    flex-direction: column;
+    padding-top: 50px;
 }
 button{
     padding: 20px;
