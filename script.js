@@ -48,7 +48,7 @@ function getComputerChoice() {
 
     let min = 1;
     let max = 4;
-
+    
     let randomNumber = Math.floor(Math.random() * (+max - +min) + +min);
     if (randomNumber === 1) {
         return rock;
@@ -73,20 +73,20 @@ function playGame(humanChoice,computerChoice){
     }
 }
 function displaywinner(winner){
-    const winnermessage = document.createElement("h1");
-    const playGround = document.querySelector("playerSelection");
+    let winnermessage = document.createElement("h1");
+    let playGround = document.querySelector("#playerSelection");
     if (winner === "human"){
         winnermessage.textContent = "YOU WIN!!";
         humanScore = 0;
         computerScore = 0;
-        playerSelection.replaceChildren();
-        playerSelection.appendChild(winnermessage);
-    } else{
+        playGround.replaceChildren();
+        playGround.appendChild(winnermessage);
+    } else if(winner === "computer"){
         winnermessage.textContent = "COMPUTER WINS";
         computerScore = 0;
         humanScore = 0;
-         playerGround.replaceChildren();
-        playerGround.appendChild(winnermessage);
+        playGround.replaceChildren();
+        playGround.appendChild(winnermessage);
         
     }
 }
