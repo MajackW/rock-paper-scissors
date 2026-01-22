@@ -1,5 +1,6 @@
 const body = document.querySelector("body");
-renderGameUI();
+let humanScore = 0;
+let computerScore = 0;
 function renderGameUI(){
     const container = document.createElement("div");
     container.classList.add("container");
@@ -8,7 +9,7 @@ function renderGameUI(){
     renderChoices(container);
     renderScores(container);
     body.appendChild(container);
-    playGame();
+    return(container);
 }
 function renderTitle(container){
     const gameTitle = document.createElement("div");
@@ -76,13 +77,77 @@ function getwinner(humanChoice,computerChoice){
     return humanWins ? "human" : "computer";
 }
 function playGame(){
-    buttons = document.querySelectorAll("button");
+    const ui = renderGameUI();
+    const container = ui.querySelector(".choicesContainer");
+    eventListeners(ui);
+
+}
+function eventListeners(container){
+    const buttons = document.querySelectorAll("button");
     buttons.forEach((button) => {
         button.addEventListener("click", (event) => {
             computerChoice = getComputerChoice()
             console.log(computerChoice);
             const winner = getwinner(event.target.id, computerChoice);
-            console.log(winner);
+            updateResult(winner,container,event.target.id,computerChoice);
+            updateChoices(container,event.target.id,computerChoice)
+            updateScores(container);
         });
     });
 }
+function updateResult(winner,container,humanChoice,computerChoice){
+    if (winner === "human"){
+        const resultContainer = container.querySelector(".result")
+        resultContainer.replaceChildren();
+        humanScore++;
+        const result = document.createElement("p");
+        result.textContent = `you win, ${humanChoice} beats ${computerChoice}`;
+        resultContainer.appendChild(result); 
+    }else if(winner === "computer"){
+        const resultContainer = container.querySelector(".result")
+        resultContainer.replaceChildren();
+        computerScore++;
+        const result = document.createElement("p");
+        result.textContent = `computer wins, ${computerChoice} beats ${humanChoice}`;
+        resultContainer.appendChild(result); 
+    }else{
+        const resultContainer = container.querySelector(".result")
+        resultContainer.replaceChildren();
+        const result = document.createElement("p");
+        result.textContent = `Its a tie, you both chose ${humanChoice}`;
+        resultContainer.appendChild(result);        
+    }
+}
+function updateScores(container){
+    const humanScoreContainer = container.querySelector("#humanScore");
+    const computerScoreContainer = container.querySelector("#computerScore");
+    humanScoreContainer.replaceChildren();
+    computerScoreContainer.replaceChildren();
+    const humanHeader = document.createElement("h2");
+    const computerHeader = document.createElement("h2");
+    humanHeader.textContent = "Your Score:";
+    computerHeader.textContent = "Computer's Score:";
+    const humanPoints = document.createElement("p");
+    const computerPoints = document.createElement("p");
+    humanPoints.textContent = `${humanScore}`;
+    computerPoints.textContent = `${computerScore}`;
+    humanScoreContainer.append(humanHeader,humanPoints);
+    computerScoreContainer.append(computerHeader,computerPoints);
+}
+function updateChoices(container,humanChoice,computerChoice){
+    const humanChoiceContainer = container.querySelector(".humanChoice");
+    const computerChoiceContainer = container.querySelector(".computerChoice");
+    humanChoiceContainer.replaceChildren();
+    computerChoiceContainer.replaceChildren();
+    const humanHeader = document.createElement("h2");
+    const computerHeader = document.createElement("h2");
+    humanHeader.textContent = "Your Choice:";
+    computerHeader.textContent = "Computer's Choice:";
+    const humanPoints = document.createElement("p");
+    const computerPoints = document.createElement("p");
+    humanPoints.textContent = `${humanChoice}`;
+    computerPoints.textContent = `${computerChoice}`;
+    humanChoiceContainer.append(humanHeader,humanPoints);
+    computerChoiceContainer.append(computerHeader,computerPoints);    
+}
+playGame();
