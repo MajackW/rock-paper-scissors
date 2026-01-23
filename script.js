@@ -15,8 +15,11 @@ function renderTitle(container){
     const gameTitle = document.createElement("div");
     gameTitle.classList.add("title");
     const header = document.createElement("h1");
+    const instruction = document.createElement("h3");
+    instruction.textContent = "first one to reach 5 points wins";
     header.textContent = "Rock Paper Scissors";
     gameTitle.appendChild(header);
+    gameTitle.appendChild(instruction);
     container.appendChild(gameTitle);
 }
 function renderOptions(container){
@@ -86,12 +89,19 @@ function eventListeners(container){
     const buttons = document.querySelectorAll("button");
     buttons.forEach((button) => {
         button.addEventListener("click", (event) => {
-            computerChoice = getComputerChoice()
-            console.log(computerChoice);
+            const computerChoice = getComputerChoice();
             const winner = getwinner(event.target.id, computerChoice);
             updateResult(winner,container,event.target.id,computerChoice);
             updateChoices(container,event.target.id,computerChoice)
             updateScores(container);
+            if (humanScore === 5) {
+                container.replaceChildren();
+                showWinner("human",container);
+            }else if (computerScore === 5){
+                container.replaceChildren();
+                showWinner("computer",container);
+            }
+
         });
     });
 }
@@ -149,5 +159,19 @@ function updateChoices(container,humanChoice,computerChoice){
     computerPoints.textContent = `${computerChoice}`;
     humanChoiceContainer.append(humanHeader,humanPoints);
     computerChoiceContainer.append(computerHeader,computerPoints);    
+}
+function showWinner(winner,container){
+    const heading = document.createElement("h1");
+    const retry = document.createElement("button");
+    retry.addEventListener("click", () => {
+        container.replaceChildren();
+        humanScore = 0;
+        computerScore = 0;
+        playGame();
+    });
+    retry.textContent = "Play Again";
+    heading.textContent = winner === "human" ? "YOU WIN!" : "YOU LOOSE";
+    container.append(heading,retry);
+
 }
 playGame();
